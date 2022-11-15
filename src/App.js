@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Components/Root/Root";
 import Banner from "./Components/Landing/Banner"
 import Notes, { notesLoading } from "./Components/Notes/Notes";
+import DisplayNote, { noteLoader } from "./Components/Notes/DisplayNote";
 
 function App() {
 	
@@ -21,6 +22,13 @@ function App() {
 					path: "notes",
 					element: <Notes />,
 					loader: notesLoading,
+					children:[
+						{
+							path: ':idNote',
+							element: <DisplayNote />,
+							loader: noteLoader,
+						}
+					] 
 				}
 			]
 		},

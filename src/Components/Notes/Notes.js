@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, Outlet } from "react-router-dom";
 
-import axios from 'axios';
+import axios from "axios";
 
 import MyForm from "./MyForm";
 import MyHeader from "./MyHeader";
@@ -14,21 +14,14 @@ export async function notesLoading() {
 }
 
 export default function Notes() {
-    
     const [user, setUser] = useState(1);
     const [data, setData] = useState([]);
     
     const notes = useLoaderData();
-
-    // let res = await axios.get("https://jsonplaceholder.typicode.com/posts");
-    // setData(res.data);
-    // const fetchData = async() => {
-    // }
     
     useEffect(() => {
-        console.log(notes);
         setData(notes);
-    }, []);
+    }, [notes]);
     
     return (
         <div style={{ width: "100%" }}>
@@ -36,8 +29,11 @@ export default function Notes() {
         <MyForm data={data} setData={setData} />
         <MyHeader userNote={user} setUser={setUser} />
         </div>
+        <div style={{display: 'flex', width: "100%"}}>
         <BodyNotes data={data} user={user} />
+        <Outlet />
         </div>
-        )
+        </div>
+        );
     }
     
