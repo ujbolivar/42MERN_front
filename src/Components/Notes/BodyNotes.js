@@ -1,6 +1,6 @@
 import React from "react";
 
-import Card from "./Card";
+import Card from "../Common/Card"
 
 export default function BodyNotes({ data, user }) {
 	return (

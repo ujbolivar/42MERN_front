@@ -1,13 +1,24 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import axios from 'axios';
 
-import MyForm from "./MyForm";
-import MyHeader from "./MyHeader";
-import BodyNotes from "./BodyNotes";
+import MyForm from "./Components/Notes/MyForm";
+import MyHeader from "./Components/Notes/MyHeader";
+import BodyNotes from "./Components/Notes/BodyNotes";
+import Root from "./Components/Root/Root";
 
 function App() {
+
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <Root />
+	}
+])
+
 	const [user, setUser] = useState(1);
 	const [data, setData] = useState([]);
 
