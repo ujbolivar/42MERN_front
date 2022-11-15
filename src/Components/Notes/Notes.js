@@ -1,25 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { useState, useEffect } from "react";
+import { useLoaderData } from 'react-router-dom';
 
 import axios from 'axios';
 
-import MyForm from "../Notes/MyForm";
-import MyHeader from "../Notes/MyHeader";
-import BodyNotes from "../Notes/BodyNotes";
+import MyForm from "./MyForm";
+import MyHeader from "./MyHeader";
+import BodyNotes from "./BodyNotes";
+
+export async function notesLoading() {
+    let res = await axios.get("https://jsonplaceholder.typicode.com/posts");
+    return res.data;
+}
 
 export default function Notes() {
     
     const [user, setUser] = useState(1);
     const [data, setData] = useState([]);
     
-    const fetchData = async() => {
-        let res = await axios.get("https://jsonplaceholder.typicode.com/posts");
-        setData(res.data);
-    }
+    const notes = useLoaderData();
+
+    // let res = await axios.get("https://jsonplaceholder.typicode.com/posts");
+    // setData(res.data);
+    // const fetchData = async() => {
+    // }
     
     useEffect(() => {
-        fetchData();
+        console.log(notes);
+        setData(notes);
     }, []);
     
     return (
