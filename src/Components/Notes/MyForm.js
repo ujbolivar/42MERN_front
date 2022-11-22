@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { Form } from 'react-router-dom';
+import axios from 'axios';
 
-export default function MyForm({ data, setData }) {
-	const [title, setTitle] = React.useState("");
-	const [body, setBody] = React.useState("");
+export async function formCreateNote({ request }) {
+	let formData = await request.formData();
+	await axios.post(process.env.REACT_APP_URL, {
+		userdId: 'ubolivar',
+		title: formData.get('title'),
+		body: formData.get('body'),
+	});
+}
 
+export async function formEditeNote({ request, params }) {
+	let formData = await request.formData();
+	await axios.put(`${process.env.REACT_APP_URL}${params.idNote}`, {
+		title: formData.get('title'),
+		body: formData.get('body'),
+	})
+}
+
+export default function MyForm() {
 	return (
 		<div
 			style={{
@@ -15,43 +31,26 @@ export default function MyForm({ data, setData }) {
 			}}
 		>
 			<h3 style={{ margin: 0 }}>Ingresa una Nota</h3>
-			<form
+			<Form
 				action=""
 				style={{ display: "flex", flexDirection: "column", width: "50%" }}
 			>
 				<input
 					type="text"
 					placeholder="Titulo"
-					value={title}
-					onChange={(e) => {
-						setTitle(e.target.value);
-					}}
+					name="title"
 				/>
 				<input
 					type="text"
 					placeholder="Descripcion"
-					value={body}
-					onChange={(e) => setBody(e.target.value)}
+					name="body"
 				/>
 				<button
-					onClick={(e) => {
-						e.preventDefault();
-						setData([
-							...data,
-							{
-								userId: 11,
-								id: data.length + 1,
-								title,
-								body,
-							},
-						]);
-						setTitle("");
-						setBody("");
-					}}
+					type='submit'
 				>
 					Add
 				</button>
-			</form>
+			</Form>
 		</div>
 	);
 }

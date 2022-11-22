@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import { useLoaderData, Outlet } from "react-router-dom";
+import { Link, useLoaderData, Outlet } from "react-router-dom";
 
 import axios from "axios";
 
-import MyForm from "./MyForm";
-import MyHeader from "./MyHeader";
 import BodyNotes from "./BodyNotes";
 
 export async function notesLoading() {
-	let res = await axios.get("https://jsonplaceholder.typicode.com/posts");
+	let res = await axios.get(process.env.REACT_APP_URL, {
+		params: {
+			userId: "emgarcia",
+		}
+	});
 	return res.data;
 }
 
@@ -21,12 +23,12 @@ export default function Notes() {
 
 	useEffect(() => {
 		setData(notes);
+		console.log(notes);
 	}, [notes]);
 	return (
 		<div style={{ width: "100%" }}>
-			<div style={{ display: "flex", width: "100%" }}>
-				<MyForm data={data} setData={setData} />
-				<MyHeader userNote={user} setUser={setUser} />
+			<div style={{display:"flex", width:"100%"}}>
+			<Link to="/notes/newNote">Add Note</Link>
 			</div>
 			<div style={{ display: "flex" }}>
 				<BodyNotes data={data} user={user} />

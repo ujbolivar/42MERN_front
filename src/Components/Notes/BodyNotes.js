@@ -15,7 +15,6 @@ export default function BodyNotes({ data, user }) {
 			}}
 		>
 			{data
-				.filter((d) => d.userId === user)
 				.map((d) => {
 					return (
 						<Link
